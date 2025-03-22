@@ -1,4 +1,4 @@
+.air.toml
 static/
 *.sqlite3
 upt.sql
-.air.toml
