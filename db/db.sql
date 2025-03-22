@@ -1,0 +1,30 @@
+CREATE TABLE IF NOT EXISTS Chats (
+    id TEXT PRIMARY KEY ,
+    name TEXT DEFAULT ""
+);
+CREATE TABLE IF NOT EXISTS Users (
+    id TEXT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL
+);
+CREATE TABLE IF NOT EXISTS Sessions (
+    id TEXT NOT NULL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES Users(id),
+    timestamp INTEGER NOT NULL,
+    expires_at INTEGER NOT NULL
+);
+ALTER TABLE Users ADD COLUMN profilepic TEXT NOT NULL DEFAULT "default-pfp.png";
+CREATE TABLE Messages (
+    id TEXT NOT NULL PRIMARY KEY,
+    content TEXT NOT NULL,
+    send_at DATETIME NOT NULL,
+    user_id INTEGER NOT NULL REFERENCES Users(id),
+    chat_id INTEGER NOT NULL REFERENCES Chats(id)
+);
+ALTER TABLE Messages RENAME send_at TO sent_at;
+CREATE TABLE ChatMembers (
+    id TEXT NOT NULL PRIMARY KEY,
+    user_id TEXT NOT NULL REFERENCES Users(id),
+    chat_id INTEGER NOT NULL REFERENCES Chats(id)
+);

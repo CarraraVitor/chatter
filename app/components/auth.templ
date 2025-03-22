@@ -1,0 +1,143 @@
+package components
+
+import (
+	"context"
+	"strings"
+
+    "chatter/app/types"
+)
+
+func isUserAuthenticated(user types.User) bool {
+    email := user.Email
+	parts := strings.Split(email, "@")
+	if len(parts) < 2 {
+		return false
+	}
+	tail := parts[1]
+	tail_parts := strings.Split(tail, ".")
+	if len(tail_parts) < 1 {
+		return false
+	}
+	domain := tail_parts[0]
+    if domain == "anon" {
+        return false
+    }
+    return true 
+}
+
+func isUserCtxAuthenticated(ctx context.Context) bool {
+    user_ctx := ctx.Value("user")
+    if user_ctx == nil {
+        return false            
+    }
+    user := user_ctx.(types.User)
+    return isUserAuthenticated(user)
+}
+
+templ LoginAsAnon() {
+    @Head("Chatter - Login")
+    @Navbar()
+	<section class="section">
+        <div class="container">
+          <div class="card">
+            <header class="card-header">
+                <p class="card-header-title mx-auto is-size-3"
+                   style="max-width:fit-content"
+                >
+                    Você não está logado
+                </p>
+            </header>
+            <footer class="card-footer">
+              <a href="/login" class="card-footer-item"> Login </a>
+              <a class="card-footer-item"
+                hx-get="/loginanon"
+                hx-trigger="click"
+              > Fazer Login como Usuário Anônimo </a>
+              <a href="/chatrooms" class="card-footer-item"> Voltar </a>
+            </footer>
+          </div>
+        </div>
+    </section>
+}
+
+
+templ LoginPage() {
+    @Head("Chatter - Login")
+    @Navbar()
+	<section class="section">
+        <div class="container">
+            <div class="field">
+              <p class="control has-icons-left has-icons-right">
+                <input id="loginInput" name="Email" class="input" type="email" placeholder="Email">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control has-icons-left">
+                <input id="loginInput" name="Password" class="input" type="password" placeholder="Password">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <button class="button is-success"
+                    hx-post="/login"
+                    hx-include="#loginInput"
+                >
+                  Login
+                </button>
+              </p>
+            </div>
+        </div>
+    </section>
+}
+
+
+templ RegisterPage() {
+    @Head("Chatter - Register")
+    @Navbar()
+	<section class="section">
+        <div class="container">
+            <div class="field">
+              <div class="control has-icons-left has-icons-right">
+                 <input id="registerInput" name="Name" class="input" type="text" placeholder="Username">
+                 <span class="icon is-small is-left">
+                   <i class="fas fa-user"></i>
+                 </span>
+              </div>
+              <p class="control has-icons-left has-icons-right">
+                <input id="registerInput" name="Email" class="input" type="email" placeholder="Email">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                </span>
+              </p>
+              <p class="control has-icons-left">
+                <input id="registerInput" name="Password" class="input" type="password" placeholder="Password">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </p>
+              <p class="control has-icons-left">
+                <input id="registerInput" name="RepeatPassword" class="input" type="password" placeholder="Repeat Password">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <button class="button is-success"
+                    hx-post="/register"
+                    hx-include="#registerInput"
+                >
+                  Register
+                </button>
+              </p>
+            </div>
+        </div>
+    </section>
+}

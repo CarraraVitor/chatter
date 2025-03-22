@@ -1,0 +1,77 @@
+package components
+
+import (
+    "fmt"
+    "chatter/app/types"
+)
+
+templ Navbar() {
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/chatrooms">
+
+          <!-- the following code was ai generated -->
+          <svg class="icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#00d1b2;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00d8c2;stop-opacity:1" />
+              </linearGradient>
+              <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+              </filter>
+            </defs>
+            <circle cx="32" cy="32" r="30" fill="url(#grad)" filter="url(#shadow)"/>
+            <path d="M20 24h24v4H20zm0 10h24v4H20zm0 10h16v4H20z" fill="#fff"/>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 410 100" height="60">
+            <text x="0" y="70" fill="#00d1b2" font-family="'Arial Black', sans-serif" font-size="72" letter-spacing="5">
+              CHATTER
+            </text>
+          </svg>
+          <!-- end of ai generated code -->
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/chatrooms">
+            Home
+          </a>
+        </div>
+
+        
+        if !isUserCtxAuthenticated(ctx) {
+            <div class="navbar-end">
+              <div class="navbar-item">
+                <div class="buttons">
+                  <a class="button is-primary" href="/register">
+                    <strong>Sign up</strong>
+                  </a>
+                  <a class="button is-light" href="/login">
+                    Log in
+                  </a>
+                </div>
+              </div>
+            </div>
+        } else {
+            <div class="navbar-end">
+              <div class="navbar-item">
+                <figure class="media-left">
+                  <p class="image is-32x32 ">
+                    <img class="is-rounded" src={fmt.Sprintf("/static/%s", ctx.Value("user").(types.User).ProfilePic)}/>
+                  </p>
+                </figure>
+              </div>
+            </div>
+        }
+      </div>
+    </nav>
+}

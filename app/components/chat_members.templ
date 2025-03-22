@@ -1,0 +1,144 @@
+package components
+
+import (
+    "chatter/app/types"
+)
+
+templ ChatMembersModal(chat types.Chat, users []types.User) {
+	<div id="members-list-modal" class="modal">
+		<div class="modal-background"></div>
+		<div class="modal-card">
+			<header class="modal-card-head">
+				<p class="modal-card-title">{ chat.Name } - Membros </p>
+				<button class="delete" aria-label="close"></button>
+			</header>
+			<section class="modal-card-body"
+               id="members-list" 
+               hx-get={"/chatroom/" + chat.Id.String() + "/members"}
+               hx-trigger="update"
+            >
+				if len(users) == 0 {
+					<div class="content">Sem Membros Registrados </div>
+				} else {
+                    @ChatMembersList(chat, users)
+				}
+			</section>
+		</div>
+	</div>
+}
+
+templ ChatMembersList(chat types.Chat, users []types.User) {
+	for _, user := range users {
+		@UserCard(user) {
+			<button class="button is-danger"
+              hx-delete="/chatroom/member"
+              hx-include="this"
+              hx-params="*"
+              hx-target="closest section"
+              hx-swap="afterbegin"
+              _="on click wait for 1s then trigger update on #members-list"
+            >
+				<span class="icon is-small">
+					<i class="fas fa-xmark"></i>
+				</span>
+				<span>Remover</span>
+                <input hidden name="ChatId" value={chat.Id.String()}/>
+                <input hidden name="UserId" value={user.Id.String()}/>
+			</button>
+		}
+	}
+}
+
+templ AddMemberModal(chat types.Chat) {
+	<div id="add-member-modal" class="modal">
+		<div class="modal-background"></div>
+		<div class="modal-card">
+			<header class="modal-card-head">
+				<p class="modal-card-title">{ chat.Name } - Membros </p>
+				<button class="delete" aria-label="close"></button>
+			</header>
+			<section class="modal-card-body">
+				<input
+					class="input"
+					type="search"
+					name="Search"
+					placeholder="Email do usuário"
+					hx-post="/search/users"
+					hx-trigger="input changed delay:500ms, keyup[key=='Enter'], load"
+					hx-target="#search-results"
+                    hx-include="next input"
+				/>
+                <input name="ChatId" hidden value={chat.Id.String()} />
+				<div id="search-results" class="content"></div>
+			</section>
+		</div>
+	</div>
+}
+
+templ UserSearchResp(chat_id string, users []types.User) {
+    for _, user := range users {
+		@UserCard(user) {
+			<button class="button is-success"
+              hx-post="/chatroom/addmember"
+              hx-include="this"
+              hx-target="closest section"
+              hx-swap="afterbegin"
+              _="on click wait for 1s then trigger update on #members-list"
+            >
+				<span class="icon is-small">
+					<i class="fas fa-check"></i>
+				</span>
+				<span>Adicionar</span>
+                <input hidden name="ChatId" value={chat_id}/>
+                <input hidden name="UserId" value={user.Id.String()}/>
+			</button>
+		}
+    }
+}
+
+templ ChatAddMemberResp(success bool) {
+	<div class="is-flex is-align-content-center">
+		<div
+            style="position:absolute;right:1rem;top:0.5rem;"
+			id="notification"
+			if success {
+				class="notification is-flex-grow-1 is-success"
+			} else {
+				class="notification is-flex-grow-1 is-danger"
+			}
+			_="on load wait for 2s then remove me"
+		>
+			<button class="delete" _="on click remove #notification"></button>
+			if success {
+				Usuário adicionado ao chat
+			} else {
+				Ocorreu um erro 
+			}
+		</div>
+	</div>
+}
+
+templ ChatRemoveMemberResp(success bool) {
+	<div 
+      class="is-flex is-align-content-center"
+    >
+		<div
+			id="notification"
+            style="position:absolute;right:1rem;top:0.5rem;"
+			if success {
+				class="notification is-flex-grow-1 is-success"
+			} else {
+				class="notification is-flex-grow-1 is-danger"
+			}
+			_="on load wait for 2s then remove me"
+		>
+			<button class="delete" _="on click remove #notification"></button>
+			if success {
+				Usuário removido do chat
+			} else {
+				Ocorreu um erro 
+			}
+		</div>
+	</div>
+}
+

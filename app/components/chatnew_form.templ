@@ -1,0 +1,50 @@
+package components
+
+
+templ FormAddChat() {
+    <div
+      id="formAdd"
+      class="field is-grouped"
+    >
+      <div class="control">
+        <input id="inputformadd" class="input" type="text" placeholder="Room's name" name="ChatRoomName"/>
+      </div>
+      <div class="control">
+        <button class="button is-link"
+          hx-post="/chatroom/new"
+          hx-target="#formAdd"
+          hx-swap="outerHTML"
+          hx-include="#inputformadd"
+          _="on click trigger update on the next <table/>"
+        >Criar</button>
+      </div>
+    </div>
+}
+
+templ FormAddChatResp(success bool) {
+    <div class="is-flex is-align-content-center">
+      <button class="block button" hx-get="/chatroom/formadd" hx-swap="outerHTML">
+        Create New Room
+      </button>
+
+      <div 
+        id="notification"
+        if success {
+            class="notification is-flex-grow-1 is-success"
+        } else {
+            class="notification is-flex-grow-1 is-danger"
+        }
+        _="wait 2s then remove #notification">
+        <button 
+          class="delete"
+          _="on click remove #notification"
+        ></button>
+        if success {
+            Created New Chat
+        } 
+        else {
+            An error occurred trying to create the new  Sorry
+        }
+      </div>
+    </div>
+}

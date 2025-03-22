@@ -1,0 +1,73 @@
+package components
+
+import (
+    "fmt"
+
+    "chatter/app/types"
+)
+
+
+templ ListChatPage(title string, rooms []types.Chat) {
+    @Page(title) {
+      @ListBody(rooms)
+    }
+}
+
+templ ListBody(rooms []types.Chat) {
+  <section class="section">
+    <div class="container">
+    <h1 
+      class="title"
+      style="padding-bottom: 0.1rem; border-bottom: 0.5rem solid var(--bulma-primary-on-scheme);"
+    >
+        Available Chat Rooms
+    </h1>
+      <div class="content">
+        <button class="block button"
+          hx-get="/chatroom/formadd"
+          hx-swap="outerHTML"  
+        >
+          Create New Room
+        </button>
+        @ListTable(rooms)
+      </div>
+    </div>
+  </section>
+}
+
+templ ListTable(rooms []types.Chat) {
+    <table class="table is-hoverable is-striped"
+      hx-get="/chatrooms"
+      hx-trigger="update"
+    >
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Id</th>
+          <th>Online</th>
+        </tr>
+      </thead>
+      <tbody >
+        for _, room := range rooms {
+            <tr>
+              if room.Name != "" { 
+               <td> {room.Name} </td>
+              } else {
+               <td>  {"--"} </td> 
+              }
+              <td><a href={templ.URL(fmt.Sprintf("/chatroom/%s", room.Id.String()))}> {room.Id.String()} </a></td>
+              <td>{ fmt.Sprintf("%d", len(room.Clients)) }</td>
+              <td>
+                <button 
+                  class="delete"
+                  hx-delete={fmt.Sprintf("/chatroom/%s", room.Id)}
+                  hx-swap="none"
+                  _="on click remove closest <tr/>"
+                > </button>
+              </td>
+            </tr>
+        }
+      </tbody>
+    </table>
+}
+

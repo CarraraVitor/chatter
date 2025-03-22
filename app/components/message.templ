@@ -1,0 +1,73 @@
+package components
+
+import (
+    "fmt"
+    "time"
+
+    "chatter/app/types"
+)
+
+func FormatTime(t time.Time) string {
+    now := time.Now().UTC()
+    if now.Day() == t.Day() {
+        return fmt.Sprintf("%.2d:%.2d", t.Hour(), t.Minute())
+    } else if now.Year() == t.Year() {
+        return fmt.Sprintf("%.2d-%.2d %.2d:%.2d", t.Day(), t.Month(), t.Hour(), t.Minute())
+    } else {
+        return fmt.Sprintf("%.2d-%.2d-%.4d %.2d:%.2d", t.Day(), t.Month(), t.Year(), t.Hour(), t.Minute())
+    }
+}
+
+templ SendMessage(msg types.SendMessage) {
+	<div id="chat_room" hx-swap-oob="beforeend">
+        @Message(msg)
+	</div>
+}
+
+templ Message(msg types.SendMessage) {
+    if msg.Sender.Id == msg.Receiver.Id {
+        @MessageBySelf(msg)
+    } else {
+        @MessageByOther(msg)
+    }
+}
+
+templ MessageBySelf(msg types.SendMessage) {
+    <div class="is-flex is-flex-direction-row is-justify-content-flex-end" width="100%"> 
+        <article class="media" style="max-width:60%;width:fit-content;padding:1rem;">
+            <div class="media-content" style="background-color: var(--bulma-primary-soft);padding:0.8rem;border-radius:1rem;">
+                @MessageBody(msg)
+            </div>
+        </article>
+    </div>
+}
+
+
+templ MessageByOther(msg types.SendMessage) {
+    <div class="is-flex is-flex-direction-row" width="100%">
+        <article class="media" style="width:fit-content;padding:1rem;margin-left:0.5rem;">
+            <figure class="media-left">
+                <p class="image is-32x32">
+                    <img class="is-rounded" src={fmt.Sprintf("/static/%s", msg.Sender.ProfilePic)}/>
+                </p>
+            </figure>
+            <div class="media-content" style="max-width:70%;background-color:var(--bulma-primary-dark);padding:0.8rem;border-radius:1rem;">
+                @MessageBody(msg)
+            </div>
+        </article>
+    </div>
+}
+
+templ MessageBody(msg types.SendMessage) {
+    <div class="content message-body" style="min-width:20rem">
+        <p style="max-width:100%;overflow-wrap:anywhere;">
+            <strong style="color:var(--bulma-primary-light);">{ msg.Sender.Name }</strong> 
+            if isUserAuthenticated(msg.Sender) {
+                <small>{ msg.Sender.Email }</small> 
+            }
+            <small class="is-right">{FormatTime(msg.SendAt)}</small>
+            <br/>
+            <span class="is-size-5-desktop is-size-7-touch" style="color:var(--bulma-primary-15-invert);"> { msg.Message } </span>
+        </p>
+    </div>
+}

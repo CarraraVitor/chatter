@@ -1,0 +1,28 @@
+package components
+
+import (
+	"chatter/app/types"
+	"fmt"
+)
+
+templ UserCard(user types.User) {
+	<div class="card">
+		<div class="card-content">
+			<div class="media">
+				<div class="media-left">
+					<figure class="media-left">
+						<p class="image is-48x48">
+							<img class="is-rounded" src={ fmt.Sprintf("/static/%s", user.ProfilePic) }/>
+						</p>
+					</figure>
+				</div>
+				<div class="media-content">
+					<p class="title is-4">{ user.Name }</p>
+					<p class="subtitle is-6">{ user.Email }</p>
+				</div>
+                {children...}
+			</div>
+		</div>
+	</div>
+}
+
