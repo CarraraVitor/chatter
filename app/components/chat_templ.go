@@ -42,20 +42,33 @@ func ChatDisplay(c types.Chat, msgs []types.SendMessage, members []types.User) t
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<style>\n    input:invalid {}\n</style><section class=\"section\" _=\"init scrollBottom(#chat_room)\"><div class=\"container is-max-desktop\"><div class=\"is-flex is-flex-direction-row is-justify-content-space-between\"><h1 class=\"title\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<style>\n    input:invalid {}\n    </style><section class=\"section\" _=\"init scrollBottom(#chat_room)\" style=\"padding-top: 0.1rem;\"><div class=\"container is-max-desktop\" style=\"margin-top:0.1rem;\"><div class=\"is-flex is-flex-direction-row is-justify-content-space-between\" style=\"padding-bottom: 0.5rem; border-bottom: 0.5rem solid var(--bulma-primary-on-scheme);\"><div class=\"is-flex is-flex-direction-column is-justify-content-start\"><h1 class=\"title is-size-4-desktop is-size-6-touch\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(c.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/components/chat.templ`, Line: 20, Col: 30}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/components/chat.templ`, Line: 24, Col: 80}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h1>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h1><h2 class=\"subtitle is-size-5-desktop is-size-7-touch\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var3 string
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(c.Id.String())
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/components/chat.templ`, Line: 28, Col: 39}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h2></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -63,33 +76,20 @@ func ChatDisplay(c types.Chat, msgs []types.SendMessage, members []types.User) t
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><h2 class=\"subtitle\" style=\"padding-bottom: 0.5rem; border-bottom: 0.5rem solid var(--bulma-primary-on-scheme);\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(c.Id.String())
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/components/chat.templ`, Line: 27, Col: 19}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h2><div class=\"content\"><div hx-ext=\"ws\" ws-connect=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"content\" style=\"width: 100%; padding: 1rem 0rem;\"><div hx-ext=\"ws\" ws-connect=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("/chatroom/%s/ws", c.Id.String()))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/components/chat.templ`, Line: 30, Col: 79}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/components/chat.templ`, Line: 34, Col: 79}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><div id=\"chat_room\" class=\"block has-background-black-ter\" style=\"\n                          width: 100%;\n                          height: 60dvh;\n                          overflow-y: scroll;\n                          padding-top: 1rem;\n                        \">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><div id=\"chat_room\" style=\"height: 60dvh; overflow-y: scroll;\" class=\"block has-background-black-ter\" style=\"border:solid 1px red;\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -136,7 +136,7 @@ func ChatDropdown() templ.Component {
 			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"dropdown\" _=\"on click toggle .is-active on me\"><div class=\"dropdown-trigger\"><button class=\"button\" aria-haspopup=\"true\" aria-controls=\"dropdown-menu\"><span>...</span> <span class=\"icon is-small\"><i class=\"fas fa-angle-down\" aria-hidden=\"true\"></i></span></button></div><div class=\"dropdown-menu\" id=\"dropdown-menu\" role=\"menu\"><div class=\"dropdown-content\"><div class=\"dropdown-item\"><button class=\"modal-trigger\" data-target=\"members-list-modal\">Ver Membros</button></div><hr class=\"dropdown-divider\"><div class=\"dropdown-item\"><button class=\"modal-trigger\" data-target=\"add-member-modal\">Adicionar Membro</button></div></div></div></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"dropdown is-right\" _=\"on click toggle .is-active on me\"><div class=\"dropdown-trigger\"><button class=\"button\" aria-haspopup=\"true\" aria-controls=\"dropdown-menu\"><span class=\"is-size-4-desktop is-size-6-touch\">...</span></button></div><div class=\"dropdown-menu\" id=\"dropdown-menu\" role=\"menu\"><div class=\"dropdown-content\"><div class=\"dropdown-item\"><button class=\"modal-trigger\" data-target=\"members-list-modal\">Ver Membros</button></div><hr class=\"dropdown-divider\"><div class=\"dropdown-item\"><button class=\"modal-trigger\" data-target=\"add-member-modal\">Adicionar Membro</button></div></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

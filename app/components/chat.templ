@@ -13,30 +13,30 @@ templ ChatDisplay(c types.Chat, msgs []types.SendMessage, members []types.User) 
 	@ModalListeners()
 	<style>
     input:invalid {}
-</style>
-	<section class="section" _="init scrollBottom(#chat_room)">
-		<div class="container is-max-desktop">
-			<div class="is-flex is-flex-direction-row is-justify-content-space-between">
-				<h1 class="title">{ c.Name }</h1>
+    </style>
+	<section class="section" _="init scrollBottom(#chat_room)" style="padding-top: 0.1rem;">
+		<div class="container is-max-desktop" style="margin-top:0.1rem;">
+			<div 
+              class="is-flex is-flex-direction-row is-justify-content-space-between"
+              style="padding-bottom: 0.5rem; border-bottom: 0.5rem solid var(--bulma-primary-on-scheme);"
+            >
+                <div class="is-flex is-flex-direction-column is-justify-content-start">
+                    <h1 class="title is-size-4-desktop is-size-6-touch">{ c.Name }</h1>
+                    <h2
+                      class="subtitle is-size-5-desktop is-size-7-touch"
+                    >
+                        { c.Id.String() }
+                    </h2>
+                </div>
 				@ChatDropdown()
 			</div>
-			<h2
-				class="subtitle"
-				style="padding-bottom: 0.5rem; border-bottom: 0.5rem solid var(--bulma-primary-on-scheme);"
-			>
-				{ c.Id.String() }
-			</h2>
-			<div class="content">
+			<div class="content" style="width: 100%; padding: 1rem 0rem;">
 				<div hx-ext="ws" ws-connect={ fmt.Sprintf("/chatroom/%s/ws", c.Id.String()) }>
 					<div
 						id="chat_room"
+                        style="height: 60dvh; overflow-y: scroll;"
 						class="block has-background-black-ter"
-						style="
-                          width: 100%;
-                          height: 60dvh;
-                          overflow-y: scroll;
-                          padding-top: 1rem;
-                        "
+                            style="border:solid 1px red;"
 					>
 						for _, msg := range msgs {
 							@Message(msg)
@@ -69,13 +69,10 @@ templ ChatDisplay(c types.Chat, msgs []types.SendMessage, members []types.User) 
 }
 
 templ ChatDropdown() {
-	<div class="dropdown" _="on click toggle .is-active on me">
+	<div class="dropdown is-right" _="on click toggle .is-active on me">
 		<div class="dropdown-trigger">
 			<button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-				<span>...</span>
-				<span class="icon is-small">
-					<i class="fas fa-angle-down" aria-hidden="true"></i>
-				</span>
+				<span class="is-size-4-desktop is-size-6-touch">...</span>
 			</button>
 		</div>
 		<div class="dropdown-menu" id="dropdown-menu" role="menu">

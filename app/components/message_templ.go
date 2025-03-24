@@ -120,7 +120,7 @@ func MessageBySelf(msg types.SendMessage) templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"is-flex is-flex-direction-row is-justify-content-flex-end\" width=\"100%\"><article class=\"media\" style=\"max-width:60%;width:fit-content;padding:1rem;\"><div class=\"media-content\" style=\"background-color: var(--bulma-primary-soft);padding:0.8rem;border-radius:1rem;\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"is-flex is-flex-direction-row is-justify-content-flex-end\" width=\"100%\" style=\"margin-right:0;\"><article class=\"media\" style=\"max-width:80%;width:fit-content;padding:1rem;\"><div class=\"media-content\" style=\"background-color: var(--bulma-primary-soft);padding:0.8rem;border-radius:1rem;\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -157,7 +157,7 @@ func MessageByOther(msg types.SendMessage) templ.Component {
 			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"is-flex is-flex-direction-row\" width=\"100%\"><article class=\"media\" style=\"width:fit-content;padding:1rem;margin-left:0.5rem;\"><figure class=\"media-left\"><p class=\"image is-32x32\"><img class=\"is-rounded\" src=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"is-flex is-flex-direction-row\" width=\"100%\" style=\"margin-right:0;\"><article class=\"media\" style=\"width:fit-content;padding:1rem 0.5rem;margin-left:0.5rem;\"><figure class=\"media-left\"><p class=\"image is-32x32\"><img class=\"is-rounded\" src=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -170,7 +170,7 @@ func MessageByOther(msg types.SendMessage) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></p></figure><div class=\"media-content\" style=\"max-width:70%;background-color:var(--bulma-primary-dark);padding:0.8rem;border-radius:1rem;\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></p></figure><div class=\"media-content\" style=\"max-width:80%;background-color:var(--bulma-primary-dark);padding:0.8rem;border-radius:1rem;\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -207,14 +207,14 @@ func MessageBody(msg types.SendMessage) templ.Component {
 			templ_7745c5c3_Var6 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"content message-body\" style=\"min-width:20rem\"><p style=\"max-width:100%;overflow-wrap:anywhere;\"><strong style=\"color:var(--bulma-primary-light);\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"content message-body\" style=\"min-width:60%;\"><div style=\"max-width:100%;min-width:60%;\"><strong>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(msg.Sender.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/components/message.templ`, Line: 64, Col: 79}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/components/message.templ`, Line: 64, Col: 38}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
@@ -238,38 +238,38 @@ func MessageBody(msg types.SendMessage) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</small> ")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</small>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<small class=\"is-right\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<br><small class=\"is-right\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 string
 		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(FormatTime(msg.SendAt))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/components/message.templ`, Line: 68, Col: 59}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/components/message.templ`, Line: 69, Col: 59}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</small><br><span class=\"is-size-5-desktop is-size-7-touch\" style=\"color:var(--bulma-primary-15-invert);\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</small></div><div><span class=\"is-size-5-desktop is-size-7-touch\" style=\"color:var(--bulma-primary-15-invert);\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var10 string
 		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(msg.Message)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/components/message.templ`, Line: 70, Col: 120}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/components/message.templ`, Line: 72, Col: 120}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span></p></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
