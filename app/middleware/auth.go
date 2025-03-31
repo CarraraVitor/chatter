@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"chatter/app"
+	"chatter/app/handlers"
 	"chatter/app/services"
 )
 
@@ -32,7 +32,7 @@ func IsAuthenticated(next http.Handler) http.Handler {
 				return
 			}
 		}
-		if !app.PublicRoutes[r.URL.Path] {
+		if !handlers.PublicRoutes[r.URL.Path] {
 			cookie, err := r.Cookie("SessionToken")
 			if err != nil {
 				log.Printf("AuthMiddleware [%s] -> No Cookie Found: %s\n", r.URL.Path, err.Error())

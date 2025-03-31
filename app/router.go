@@ -2,6 +2,7 @@ package app
 
 import (
 	"chatter/app/types"
+	"chatter/app/handlers"
 )
 
 var AppRouter types.Router
@@ -10,55 +11,55 @@ func init() {
 	AppRouter.Register(
 		types.Route{
 			Path:    "GET /chatrooms",
-			Handler: ListRooms,
+			Handler: handlers.ListRooms,
 		},
 	)
 	AppRouter.Register(
 		types.Route{
 			Path:    "POST /chatroom/new",
-			Handler: NewChatRoom,
+			Handler: handlers.NewChatRoom,
 		},
 	)
 	AppRouter.Register(
 		types.Route{
 			Path:    "GET /chatroom/formadd",
-			Handler: RenderFormAdd,
+			Handler: handlers.RenderFormAdd,
 		},
 	)
 	AppRouter.Register(
 		types.Route{
 			Path:    "GET /chatroom/{roomid}/members",
-			Handler: ListChatMembers,
+			Handler: handlers.ListChatMembers,
 		},
 	)
 	AppRouter.Register(
 		types.Route{
 			Path:    "GET /chatroom/{roomid}/ws",
-			Handler: JoinChatRoom,
+			Handler: handlers.JoinChatRoom,
 		},
 	)
 	AppRouter.Register(
 		types.Route{
 			Path:    "GET /chatroom/{roomid}",
-			Handler: DisplayChatRoom,
+			Handler: handlers.DisplayChatRoom,
 		},
 	)
 	AppRouter.Register(
 		types.Route{
 			Path:    "DELETE /chatroom/{roomid}",
-			Handler: DeleteChatRoom,
+			Handler: handlers.DeleteChatRoom,
 		},
 	)
 	AppRouter.Register(
 		types.Route{
 			Path:    "DELETE /chatroom/member",
-			Handler: ChatRemoveMember,
+			Handler: handlers.ChatRemoveMember,
 		},
 	)
 	AppRouter.Register(
 		types.Route{
 			Path:    "POST /chatroom/addmember",
-			Handler: ChatAddMember,
+			Handler: handlers.ChatAddMember,
 		},
 	)
 
@@ -66,62 +67,62 @@ func init() {
 	AppRouter.Register(
 		types.Route{
 			Path:    "GET /login",
-			Handler: HandleGetLogin,
+			Handler: handlers.HandleGetLogin,
 		},
 	)
 	AppRouter.Register(
 		types.Route{
 			Path:    "GET /loginanon",
-			Handler: HandleLoginAnon,
+			Handler: handlers.HandleLoginAnon,
 		},
 	)
 	AppRouter.Register(
 		types.Route{
 			Path:    "POST /login",
-			Handler: HandlePostLogin,
+			Handler: handlers.HandlePostLogin,
 		},
 	)
 	AppRouter.Register(
 		types.Route{
 			Path:    "GET /logout",
-			Handler: HandleGetLogout,
+			Handler: handlers.HandleGetLogout,
 		},
 	)
 	AppRouter.Register(
 		types.Route{
 			Path:    "GET /register",
-			Handler: HandleGetRegister,
+			Handler: handlers.HandleGetRegister,
 		},
 	)
 	AppRouter.Register(
 		types.Route{
 			Path:    "POST /register",
-			Handler: HandlePostRegister,
+			Handler: handlers.HandlePostRegister,
 		},
 	)
 	AppRouter.Register(
 		types.Route{
 			Path:    "GET /user",
-			Handler: HandleGetProfile,
+			Handler: handlers.HandleGetProfile,
 		},
 	)
 	AppRouter.Register(
 		types.Route{
 			Path:    "POST /upload",
-			Handler: HandlePostProfilePic,
+			Handler: handlers.HandlePostProfilePic,
 		},
 	)
 	AppRouter.Register(
 		types.Route{
 			Path:    "POST /search/users",
-			Handler: UserSearchEmail,
+			Handler: handlers.UserSearchEmail,
 		},
 	)
 
 	AppRouter.Register(
 		types.Route{
 			Path:    "/",
-			Handler: RenderNotFoundPage,
+			Handler: handlers.RenderNotFoundPage,
 		},
 	)
 }
