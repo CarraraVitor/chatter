@@ -2,7 +2,6 @@ package database
 
 import (
 	"database/sql"
-	"fmt"
 
 	"chatter/app/types"
 
@@ -87,7 +86,7 @@ func SaveChat(c types.Chat) (sql.Result, error) {
 func DeleteChat(c types.Chat) (sql.Result, error) {
     db := Open()
     defer db.Close()
-    res, err := db.Exec("DELETE FROM Chats WHERE id = ?", c.Id)
+    res, err := db.Exec("DELETE FROM Chats WHERE id = ?", c.Id.String())
     return res, err
 }
 
@@ -103,11 +102,8 @@ func ChatAddMember(user_id, chat_id uuid.UUID) (sql.Result, error) {
 func ChatRemoveMember(user_id, chat_id uuid.UUID) (sql.Result, error) {
     db := Open()
     defer db.Close()
-    fmt.Printf("user_id: %s\nchat_id: %s\n", user_id, chat_id)
     del := "DELETE FROM ChatMembers WHERE user_id = ? AND chat_id = ?"
     res, err := db.Exec(del, user_id, chat_id)
-    nrows, _ := res.RowsAffected()
-    fmt.Printf("remove member:\ndel: %s\nnrows: %d\nerr: %s\n",del, nrows, err)
     return res, err
 }
 

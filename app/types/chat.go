@@ -8,6 +8,7 @@ type Chat struct {
 	Id         uuid.UUID
 	Name       string
 	Clients    map[*Client]bool
+	Destroy    chan bool
 	Broadcast  chan SendMessage
 	Register   chan *Client
 	Unregister chan *Client
@@ -17,6 +18,7 @@ type Chat struct {
 func (c *Chat) Init() {
 	c.Clients = make(map[*Client]bool)
 	c.Broadcast = make(chan SendMessage)
+	c.Destroy = make(chan bool)
 	c.Register = make(chan *Client)
 	c.Unregister = make(chan *Client)
 }
@@ -41,6 +43,11 @@ func (c *Chat) Run() {
 				delete(c.Clients, client)
 				close(client.Send)
 			}
+		case <-c.Destroy:
+			goto exit;
 		}
 	}
+exit:
+	close(c.Destroy)
+	return
 }

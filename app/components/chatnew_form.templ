@@ -7,7 +7,7 @@ templ FormAddChat() {
       class="field is-grouped"
     >
       <div class="control">
-        <input id="inputformadd" class="input" type="text" placeholder="Room's name" name="ChatRoomName"/>
+        <input id="inputformadd" class="input" type="text" placeholder="Nome da Sala" name="ChatRoomName"/>
       </div>
       <div class="control">
         <button class="button is-link"
@@ -15,7 +15,7 @@ templ FormAddChat() {
           hx-target="#formAdd"
           hx-swap="outerHTML"
           hx-include="#inputformadd"
-          _="on click trigger update on the next <table/>"
+          _="on click trigger update on the next #chat-list"
         >Criar</button>
       </div>
     </div>
@@ -24,7 +24,7 @@ templ FormAddChat() {
 templ FormAddChatResp(success bool) {
     <div class="is-flex is-align-content-center">
       <button class="block button" hx-get="/chatroom/formadd" hx-swap="outerHTML">
-        Create New Room
+        Criar Nova Sala
       </button>
 
       <div 
@@ -40,10 +40,10 @@ templ FormAddChatResp(success bool) {
           _="on click remove #notification"
         ></button>
         if success {
-            Created New Chat
+            Nova Sala Criada!
         } 
         else {
-            An error occurred trying to create the new  Sorry
+            Ocorreu um erro. Tente novamente.
         }
       </div>
     </div>

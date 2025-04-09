@@ -8,7 +8,6 @@ import (
 	"github.com/google/uuid"
 
 	"chatter/app/components"
-	"chatter/app/database"
 	"chatter/app/services"
 )
 
@@ -98,10 +97,8 @@ func JoinChatRoom(w http.ResponseWriter, r *http.Request) {
 
 func NewChatRoom(w http.ResponseWriter, r *http.Request) {
 	name := r.FormValue("ChatRoomName")
-	c := services.NewChat(name)
-	go c.Run()
-	services.Chats[c.Id] = c
-	_, err := database.SaveChat(*c)
+	user, _ := services.UserFromSessionCookie(r)
+	err := services.AddNewChat(name, user)
 	ctx := context.Background()
 	components.FormAddChatResp(err == nil).Render(ctx, w)
 }
@@ -154,7 +151,6 @@ func ChatAddMember(w http.ResponseWriter, r *http.Request) {
 
 func ChatRemoveMember(w http.ResponseWriter, r *http.Request) {
     params := r.URL.Query()
-    fmt.Printf("Params: %+v\n", params)
     chat_id := params.Get("ChatId")
     if chat_id == "" {
         return

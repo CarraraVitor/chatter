@@ -20,13 +20,30 @@ templ UserProfile(title string) {
               {ctx.Value("user").(types.User).Name}
           </h1>
 
-          <form hx-encoding='multipart/form-data' hx-post='/upload'
-              _='on htmx:xhr:progress(loaded, total) set #progress.value to (loaded/total)*100'>
-            <input type='file' name='file'>
-            <button>
-                Upload
-            </button>
-            <progress id='progress' value='0' max='100'></progress>
+          <form 
+            hx-encoding='multipart/form-data' 
+            hx-post='/upload'
+            _='on htmx:xhr:progress(loaded, total) set #progress.value to (loaded/total)*100'
+          >
+            <div class="block">
+                <style scoped>
+                    label:hover { cursor: pointer; }
+                </style>
+                <label
+                  for="input-profile-pic"
+                >
+                    <i class="fa-solid fa-file"></i>
+                    Alterar Imagem de Perfil
+                </label>
+                <input id="input-profile-pic" type='file' style="display: none;">
+            </div>
+            <div class="block">
+                <button>
+                    <i class="fa-solid fa-upload"></i>
+                    Upload
+                </button>
+                <progress id='progress' value='0' max='100'></progress>
+            </div>
           </form>
 
         </div>

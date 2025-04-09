@@ -20,14 +20,14 @@ templ ListBody(rooms []types.Chat) {
       class="title"
       style="padding-bottom: 0.1rem; border-bottom: 0.5rem solid var(--bulma-primary-on-scheme);"
     >
-        Available Chat Rooms
+        Minhas Salas
     </h1>
       <div class="content">
         <button class="block button"
           hx-get="/chatroom/formadd"
           hx-swap="outerHTML"  
         >
-          Create New Room
+          Criar Nova Sala
         </button>
         @ListTable(rooms)
       </div>
@@ -36,18 +36,18 @@ templ ListBody(rooms []types.Chat) {
 }
 
 templ ListTable(rooms []types.Chat) {
-    <table class="table is-hoverable is-striped"
+    <table id="chat-list" class="table is-hoverable is-striped"
       hx-get="/chatrooms"
       hx-trigger="update"
     >
       <thead>
         <tr>
-          <th>Name</th>
+          <th>Nome</th>
           <th>Id</th>
           <th>Online</th>
         </tr>
       </thead>
-      <tbody >
+      <tbody>
         for _, room := range rooms {
             <tr>
               if room.Name != "" { 

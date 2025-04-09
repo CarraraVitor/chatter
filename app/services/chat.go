@@ -45,6 +45,18 @@ func NewChat(name string) *types.Chat {
 	}
 }
 
+func AddNewChat(name string, user types.User) error {
+	c := NewChat(name)
+	go c.Run()
+	Chats[c.Id] = c
+	_, err := database.SaveChat(*c)
+	if err != nil {
+		return nil
+	}
+	err = ChatAddMember(user.Id.String(), c.Id.String())
+	return err
+}
+
 func ListChatsWithUser(r *http.Request) ([]types.Chat, error) {
     user, _ := UserFromSessionCookie(r)
     user_rooms, err := ChatIdsByUser(user.Id)
@@ -106,7 +118,8 @@ func DeleteChat(c *types.Chat) {
         c.Unregister <- client
     }
     close(c.Unregister)
-    database.DeleteChat(*c)
+	c.Destroy <- true
+	database.DeleteChat(*c)
 	delete(Chats, c.Id)
 }
 
